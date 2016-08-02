@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Device;
+use App\Measurement;
 use App\Measurement;
 use App\Transformers\MeasurementTransformer;
 use Illuminate\Http\Request;
@@ -29,9 +29,9 @@ class MeasurementController extends Controller
     public function show($id)
     {
         try {
-            $item = Device::findOrFail($id);
+            $item = Measurement::findOrFail($id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            abort(404, 'Device not found');
+            abort(404, 'Measurement not found');
         }
 
         return $this->repository->responseItem($item);
@@ -40,9 +40,9 @@ class MeasurementController extends Controller
     public function device($id)
     {
         try {
-            $item = Device::findOrFail($id);
+            $item = Measurement::findOrFail($id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            abort(404, 'Device not found');
+            abort(404, 'Measurement not found');
         }
         return $this->repository->responseItem($item, ['device']);
     }
@@ -73,7 +73,7 @@ class MeasurementController extends Controller
         try {
             $item = Measurement::findOrFail($id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            abort(404, 'Device not found');
+            abort(404, 'Measurement not found');
         }
 
         $this->validate($request, [
@@ -83,8 +83,7 @@ class MeasurementController extends Controller
             'device_id' => 'required|exists:devices,id'
         ]);
 
-        $device = Device::findOrFail($request->input('device_id'));
-        if (\Gate::denies('update-device-measurements', $device)) {
+        if (\Gate::denies('update-device-measurements', $item->device)) {
             abort(403, 'Permission insufficient');
         }
 
@@ -99,11 +98,11 @@ class MeasurementController extends Controller
         try {
             $item = Measurement::findOrFail($id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json([
-                'error' => [
-                    'message' => 'Measurement not found'
-                ]
-            ], 404);
+            abort(404, 'Measurement not found');
+        }
+
+        if (\Gate::denies('destroy-device-measurements', $item->device)) {
+            abort(403, 'Permission insufficient');
         }
 
         $item->delete();
