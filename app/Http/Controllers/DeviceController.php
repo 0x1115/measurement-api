@@ -27,12 +27,28 @@ class DeviceController extends Controller
 
     public function show($id)
     {
-        return $this->repository->responseItem(Device::findOrFail($id));
+        try {
+            $item = Device::findOrFail($id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            abort(404, 'Device not found');
+        }
+
+        return $this->repository->responseItem($item);
     }
 
-    public function measurements($id)
+    public function measurements(Request $request, $id)
     {
-        return $this->repository->responseItem(Device::findOrFail($id), ['measurements']);
+        try {
+            $item = Device::findOrFail($id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            abort(404, 'Device not found');
+        }
+
+        if (\Gate::denies('read-device-measurements', $item)) {
+            abort(403, 'Permission insufficient');
+        }
+
+        return $this->repository->responseItem($item, ['measurements']);
     }
 
     public function store(Request $request)
@@ -53,11 +69,11 @@ class DeviceController extends Controller
         try {
             $item = Device::findOrFail($id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json([
-                'error' => [
-                    'message' => 'Device not found'
-                ]
-            ], 404);
+            abort(404, 'Device not found');
+        }
+
+        if (\Gate::denies('update-device', $item)) {
+            abort(403, 'Permission insufficient');
         }
 
         $this->validate($request, [
@@ -75,11 +91,11 @@ class DeviceController extends Controller
         try {
             $item = Device::findOrFail($id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json([
-                'error' => [
-                    'message' => 'Device not found'
-                ]
-            ], 404);
+            abort(404, 'Device not found');
+        }
+
+        if (\Gate::denies('destroy-device', $item)) {
+            abort(403, 'Permission insufficient');
         }
 
         $item->delete();

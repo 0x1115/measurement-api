@@ -15,8 +15,8 @@ class CreateTokensTable extends Migration
         Schema::create('tokens', function (Blueprint $table) {
             $table->increments('id');
             $table->string('content', 60)->unique();
-            $table->integer('device_id')->index()->unsigned()->nullable();
-            $table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
+            $table->integer('user_id')->index()->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->datetime('expired_at')->nullable();
             $table->timestamps();
         });

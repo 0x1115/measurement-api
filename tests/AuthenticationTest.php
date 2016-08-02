@@ -1,11 +1,9 @@
 <?php
 
-use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 
 class AuthenticationTest extends TestCase
 {
-    use DatabaseMigrations;
 
     public function testMeasurementAsGuest()
     {
@@ -18,9 +16,9 @@ class AuthenticationTest extends TestCase
 
     public function testMeasurementAsDevice()
     {
-        $device = factory(App\Device::class)->create();
+        $user = factory(App\User::class)->create();
 
-        $this->actingAs($device);
+        $this->actingAs($user);
 
         $this->get('/v1/measurement');
 
@@ -31,9 +29,9 @@ class AuthenticationTest extends TestCase
 
     public function testMeasurementAsDeviceWithToken()
     {
-        $device = factory(App\Device::class)->create();
+        $user = factory(App\User::class)->create();
         $token = factory(App\Token::class)->make()->fill(['expired_at' => null]);
-        $device->tokens()->save($token);
+        $user->tokens()->save($token);
 
         $response = $this->call('GET', '/v1/measurement', ['api_token' => $token->content]);
         $this->assertEquals(
@@ -52,9 +50,9 @@ class AuthenticationTest extends TestCase
 
     public function testDeviceAsDevice()
     {
-        $device = factory(App\Device::class)->create();
+        $user = factory(App\User::class)->create();
 
-        $this->actingAs($device);
+        $this->actingAs($user);
 
         $this->get('/v1/device');
 
@@ -65,9 +63,9 @@ class AuthenticationTest extends TestCase
 
     public function testDeviceAsDeviceWithToken()
     {
-        $device = factory(App\Device::class)->create();
+        $user = factory(App\User::class)->create();
         $token = factory(App\Token::class)->make()->fill(['expired_at' => null]);
-        $device->tokens()->save($token);
+        $user->tokens()->save($token);
 
         $response = $this->call('GET', '/v1/device', ['api_token' => $token->content]);
         $this->assertEquals(

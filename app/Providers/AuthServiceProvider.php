@@ -6,6 +6,7 @@ use App\Token;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -31,17 +32,57 @@ class AuthServiceProvider extends ServiceProvider
         // should return either a User instance or null. You're free to obtain
         // the User instance via an API token or any other method necessary.
 
-        $this->app['auth']->viaRequest('api', function ($request) {
-            if ($request->input('api_token')) {
-                $token = Token::whereContent($request->input('api_token'))->first();
-                if (!$token) {
-                    return null;
-                }
-                if ($token->expired) {
-                    abort(401, 'Expired token');
-                }
-                return Token::whereContent($request->input('api_token'))->active()->firstOrFail()->device;
+        \Gate::define('read-device-measurements', function ($user, $device) {
+            if (!$device->user_id) {
+                return true;
             }
+            return $user->id === $device->user_id;
         });
+
+        \Gate::define('update-device', function ($user, $device) {
+            if (!$device->user_id) {
+                return true;
+            }
+            return $user->id === $device->user_id;
+        });
+
+        \Gate::define('destroy-device', function ($user, $device) {
+            if (!$device->user_id) {
+                return true;
+            }
+            return $user->id === $device->user_id;
+        });
+
+        $this->app['auth']->viaRequest('api', function ($request) {
+            $token = $request->input('api_token');
+
+            if (empty($token)) {
+                $token = $this->bearerToken($request);
+            }
+
+            if (!$token) {
+                return null;
+            }
+
+            try {
+                $token = Token::whereContent($token)->firstOrFail();
+            } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+                return null;
+            }
+
+            if ($token->expired) {
+                abort(401, 'Expired token');
+            }
+
+            return $token->user;
+        });
+    }
+
+    public function bearerToken(\Illuminate\Http\Request $request)
+    {
+        $header = $request->header('Authorization', '');
+        if (Str::startsWith($header, 'Bearer ')) {
+            return Str::substr($header, 7);
+        }
     }
 }

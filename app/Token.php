@@ -30,9 +30,9 @@ class Token extends Model
         return $this->expired_at && $this->expired_at->lt(Carbon::now());
     }
 
-    public function device()
+    public function user()
     {
-        return $this->belongsTo(Device::class);
+        return $this->belongsTo(User::class);
     }
 
     public function scopeActive($query)

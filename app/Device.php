@@ -21,13 +21,13 @@ class Device extends Model implements AuthenticatableContract, AuthorizableContr
         'name', 'description'
     ];
 
-    public function tokens()
-    {
-        return $this->hasMany(Token::class);
-    }
-
     public function measurements()
     {
         return $this->hasMany(Measurement::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
