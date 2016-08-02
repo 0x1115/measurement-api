@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Token;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -32,7 +33,14 @@ class AuthServiceProvider extends ServiceProvider
 
         $this->app['auth']->viaRequest('api', function ($request) {
             if ($request->input('api_token')) {
-                return User::where('api_token', $request->input('api_token'))->first();
+                $token = Token::whereContent($request->input('api_token'))->first();
+                if (!$token) {
+                    return null;
+                }
+                if ($token->expired) {
+                    abort(401, 'Expired token');
+                }
+                return Token::whereContent($request->input('api_token'))->active()->firstOrFail()->device;
             }
         });
     }

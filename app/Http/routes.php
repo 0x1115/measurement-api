@@ -14,3 +14,19 @@
 $app->get('/', function () use ($app) {
     return $app->version();
 });
+
+$app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers', 'middleware' => 'auth'], function () use ($app) {
+    $app->get('device/', 'DeviceController@index');
+    $app->post('device/', 'DeviceController@store');
+    $app->get('device/{id}', ['as' => 'device.show', 'uses' => 'DeviceController@show']);
+    $app->put('device/{id}', 'DeviceController@update');
+    $app->get('device/{id}/measurements', 'DeviceController@measurements');
+    $app->delete('device/{id}', 'DeviceController@destroy');
+
+    $app->get('measurement/', 'MeasurementController@index');
+    $app->post('measurement/', 'MeasurementController@store');
+    $app->get('measurement/{id}', ['as' => 'measurement.show', 'uses' => 'MeasurementController@show']);
+    $app->put('measurement/{id}', 'MeasurementController@update');
+    $app->get('measurement/{id}/device', 'MeasurementController@device');
+    $app->delete('measurement/{id}', 'MeasurementController@destroy');
+});

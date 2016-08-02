@@ -11,6 +11,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call('UsersTableSeeder');
+        $devices = factory(App\Device::class, 10)->create()->each(function ($device) {
+            $device->tokens()->save(factory(App\Token::class)->make());
+            $device->measurements()->saveMany(factory(App\Measurement::class, 20)->make());
+        });
     }
 }

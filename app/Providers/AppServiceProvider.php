@@ -13,6 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(\App\Repositories\DeviceRepository::class, \App\Repositories\DeviceRepositoryFractal::class);
+        $this->app->bind(\App\Repositories\MeasurementRepository::class, \App\Repositories\MeasurementRepositoryFractal::class);
     }
 }

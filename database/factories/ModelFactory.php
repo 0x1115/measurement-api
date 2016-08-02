@@ -11,9 +11,25 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Device::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->email,
+        'name' => $faker->word,
+        'description' => $faker->paragraph,
+    ];
+});
+
+
+$factory->define(App\Token::class, function (Faker\Generator $faker) {
+    return [
+        'content' => substr($faker->sha256, 0, 60),
+        'expired_at' => $faker->dateTimeThisMonth
+    ];
+});
+
+
+$factory->define(App\Measurement::class, function (Faker\Generator $faker) {
+    return [
+        'humidity' => $faker->randomFloat,
+        'temperature' => $faker->numberBetween(-100, 100)
     ];
 });
