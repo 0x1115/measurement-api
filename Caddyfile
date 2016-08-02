@@ -1,0 +1,11 @@
+measurement.dev
+tls off
+root ./public
+fastcgi / 127.0.0.1:9000 php {
+    index index.php
+}
+errors storage/logs/caddy.log
+rewrite {
+    to {path} {path}/ /index.php?{query}
+}
+
