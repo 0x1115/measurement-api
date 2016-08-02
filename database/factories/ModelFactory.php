@@ -20,6 +20,14 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->defineAs(App\User::class, 'production', function (Faker\Generator $faker) {
+    return [
+        'name' => 'Developer',
+        'email' => 'dev@app.dev',
+        'remember_token' => str_random(10),
+    ];
+});
+
 $factory->define(App\Device::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->word,
