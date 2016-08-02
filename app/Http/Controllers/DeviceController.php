@@ -22,7 +22,7 @@ class DeviceController extends Controller
 
     public function index()
     {
-        return $this->repository->responsePagination(Device::paginate(20));
+        return $this->repository->responsePagination(Device::paginate());
     }
 
     public function show($id)
@@ -57,7 +57,7 @@ class DeviceController extends Controller
             'name' => 'required|max:255',
         ]);
 
-        $item = Device::create($request->all());
+        $item = $request->user()->devices()->create($request->all());
 
         return response()->json($this->repository->responseItem($item), 201, [
             'Location' => route('device.show', ['id' => $item->id])

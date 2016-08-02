@@ -39,6 +39,20 @@ class AuthServiceProvider extends ServiceProvider
             return $user->id === $device->user_id;
         });
 
+        \Gate::define('store-device-measurements', function ($user, $device) {
+            if (!$device->user_id) {
+                return true;
+            }
+            return $user->id === $device->user_id;
+        });
+
+        \Gate::define('update-device-measurements', function ($user, $device) {
+            if (!$device->user_id) {
+                return true;
+            }
+            return $user->id === $device->user_id;
+        });
+
         \Gate::define('update-device', function ($user, $device) {
             if (!$device->user_id) {
                 return true;

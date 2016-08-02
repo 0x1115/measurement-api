@@ -12,7 +12,7 @@ class Measurement extends Model
      * @var array
      */
     protected $fillable = [
-        'humidity', 'temperature'
+        'humidity', 'temperature', 'device_id'
     ];
 
     protected $casts = [
