@@ -1,5 +1,5 @@
 # Measurement API
-An API for logging humidity & temperature measurement.
+An API for logging humidity & temperature measurements.
 
 ## Documentation
 Please refer to our [Wiki](https://github.com/0x1115/measurement-api/wiki) for more information.
