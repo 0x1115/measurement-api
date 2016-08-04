@@ -18,7 +18,7 @@ trait Fractalable
     {
         return fractal()
             ->collection($paginator->getCollection(), $this->getTransformer())
-            ->serializeWith(new \League\Fractal\Serializer\JsonApiSerializer())
+            ->serializeWith(new \League\Fractal\Serializer\DataArraySerializer())
             ->paginateWith(new \League\Fractal\Pagination\IlluminatePaginatorAdapter($paginator));
     }
 
