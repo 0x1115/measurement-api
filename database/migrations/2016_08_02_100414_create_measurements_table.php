@@ -15,7 +15,7 @@ class CreateMeasurementsTable extends Migration
         Schema::create('measurements', function (Blueprint $table) {
             $table->increments('id');
             $table->decimal('humidity', 5, 2);
-            $table->integer('temperature');
+            $table->decimal('temperature', 5, 2);
             $table->integer('device_id')->index()->unsigned()->nullable();
             $table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
             $table->timestamps();
