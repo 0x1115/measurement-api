@@ -27,7 +27,7 @@ class WebController extends Controller
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json([
                     'error' => [
-                        'message' => 'ValidationError'
+                        'message' => 'ValidationError',
                         'messages' => $e->validator->getMessageBag()->all()
                     ]
                 ], 422);
@@ -58,6 +58,11 @@ class WebController extends Controller
         }
 
         $token = \App\User::generateToken($user, null);
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'data' => $token->content
+            ], 200);
+        }
         return $token->content;
     }
 }
