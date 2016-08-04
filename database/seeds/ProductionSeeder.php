@@ -12,7 +12,7 @@ class ProductionSeeder extends Seeder
     public function run()
     {
         $password = str_random(10);
-        $user = new App\User([
+        $user = App\User::create([
             'name' => 'Developer',
             'email' => 'dev@app.dev',
             'remember_token' => str_random(10),
