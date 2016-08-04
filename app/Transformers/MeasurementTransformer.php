@@ -16,6 +16,8 @@ class MeasurementTransformer extends Fractal\TransformerAbstract
             'id'      => (int) $item->id,
             'humidity'   => (double) $item->humidity,
             'temperature' => (double) $item->temperature,
+            'created_at' => $item->created_at->toIso8601String(),
+            'updated_at' => $item->updated_at->toIso8601String(),
         ];
     }
 
