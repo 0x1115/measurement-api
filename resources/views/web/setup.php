@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Login</title>
+	<title>Setup</title>
 	<link rel="stylesheet" href="/assets/css/main.css">
 </head>
 <body>
@@ -22,7 +22,7 @@
                     <input type="email" placeholder="user@domain.com" id="email" name="email" value="<?php echo isset($data['email']) ? $data['email'] : ''?>">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password">
-                    <input class="button-primary" type="submit" value="Login">
+                    <input class="button-primary" type="submit" value="Setup">
                 </fieldset>
             </form>
         </section>

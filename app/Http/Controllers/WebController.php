@@ -10,7 +10,7 @@ class WebController extends Controller
 {
     public function setup($errors = null, $data = null)
     {
-        return view('web.login', ['errors' => $errors, 'data' => $data]);
+        return view('web.setup', ['errors' => $errors, 'data' => $data]);
     }
 
     public function postSetup(Request $request)

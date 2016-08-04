@@ -1,4 +1,8 @@
 # Measurement API
+An API for logging humidity & temperature measurement.
+
+## Documentation
+Please refer to our [Wiki](https://github.com/0x1115/measurement-api/wiki) for more information.
 
 ## Installation
 ```bash
@@ -32,6 +36,9 @@ caddy -log stdout -agree=true -root=/var/tmp -conf=./Caddyfile
 ```
 and you're good to go !
 
+## Getting started
+Please see the [Getting started](https://github.com/0x1115/measurement-api/wiki/Getting-started) section for more information.
+
 ## License
 
-The Lumen framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+The API is open-sourced software powered by Lumen Framework which is licensed under the [MIT license](http://opensource.org/licenses/MIT)
