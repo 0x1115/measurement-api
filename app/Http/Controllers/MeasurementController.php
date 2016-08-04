@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Device;
 use App\Measurement;
-use App\Transformers\MeasurementTransformer;
 use Illuminate\Http\Request;
 
 class MeasurementController extends Controller

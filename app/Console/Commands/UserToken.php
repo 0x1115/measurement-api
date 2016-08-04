@@ -44,8 +44,7 @@ class UserToken extends Command
             $expiration = null;
         }
 
-        $token = factory(\App\Token::class)->make()->fill(['expired_at' => $expiration]);
-        $user->tokens()->save($token);
+        $token = \App\User::generateToken($user, $expiration, true);
         $this->info('Your token: [' . $token->content . ']');
     }
 }

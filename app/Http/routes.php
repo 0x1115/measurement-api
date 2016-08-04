@@ -12,10 +12,10 @@
 */
 
 $app->get('/', function () use ($app) {
-    return $app->version();
+    return 'Measurement API';
 });
 
-$app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers', 'middleware' => 'auth'], function () use ($app) {
+$app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers', 'middleware' => 'auth'], function ($app) {
     $app->get('device/', 'DeviceController@index');
     $app->post('device/', 'DeviceController@store');
     $app->get('device/{id}', ['as' => 'device.show', 'uses' => 'DeviceController@show']);
@@ -29,4 +29,9 @@ $app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers', 'middlewar
     $app->put('measurement/{id}', 'MeasurementController@update');
     $app->get('measurement/{id}/device', 'MeasurementController@device');
     $app->delete('measurement/{id}', 'MeasurementController@destroy');
+});
+
+$app->group(['prefix' => 'web', 'namespace' => 'App\Http\Controllers'], function ($app) {
+    $app->get('/setup', ['as' => 'web.setup', 'uses' => 'WebController@setup']);
+    $app->post('/setup', 'WebController@postSetup');
 });

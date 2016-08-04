@@ -37,6 +37,11 @@ class Token extends Model
 
     public function scopeActive($query)
     {
-        return $query->whereNull('expired_at')->orWhere('expired_at', '>', Carbon::now()->toDateTimeString());
+        return $query->forever()->orWhere('expired_at', '>', Carbon::now()->toDateTimeString());
+    }
+
+    public function scopeForever($query)
+    {
+        return $query->whereNull('expired_at');
     }
 }

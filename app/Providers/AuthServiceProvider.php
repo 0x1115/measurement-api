@@ -68,22 +68,12 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         $this->app['auth']->viaRequest('api', function ($request) {
-            $token = $request->input('api_token');
-
-            if (empty($token)) {
-                $token = $this->bearerToken($request);
-            }
-
-            if (!$token) {
-                return null;
-            }
-
+            $token = $this->getToken($request);
             try {
                 $token = Token::whereContent($token)->firstOrFail();
             } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
                 return null;
             }
-
             if ($token->expired) {
                 abort(401, 'Expired token');
             }
@@ -92,11 +82,22 @@ class AuthServiceProvider extends ServiceProvider
         });
     }
 
-    public function bearerToken(\Illuminate\Http\Request $request)
+    protected function bearerToken(\Illuminate\Http\Request $request)
     {
         $header = $request->header('Authorization', '');
         if (Str::startsWith($header, 'Bearer ')) {
             return Str::substr($header, 7);
         }
+    }
+
+    protected function getToken(\Illuminate\Http\Request $request)
+    {
+        $token = $request->input('api_token');
+
+        if (empty($token)) {
+            $token = $this->bearerToken($request);
+        }
+
+        return $token;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class ProductionSeeder extends Seeder
 {
@@ -16,7 +17,7 @@ class ProductionSeeder extends Seeder
             'name' => 'Developer',
             'email' => 'dev@app.dev',
             'remember_token' => str_random(10),
-            'password' => app('hash')->make($password)
+            'password' => Hash::make($password)
         ]);
         $this->command->info("User created: <bg=yellow;options=bold;fg=black> {$user->email}/{$password} </bg=yellow;options=bold;fg=black>");
 
