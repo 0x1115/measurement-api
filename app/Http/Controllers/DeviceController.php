@@ -55,6 +55,7 @@ class DeviceController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:255',
+            'mac_address' => 'required|unique:devices'
         ]);
 
         $item = $request->user()->devices()->create($request->all());
@@ -77,7 +78,8 @@ class DeviceController extends Controller
         }
 
         $this->validate($request, [
-            'name' => 'required|max:255',
+            'name' => 'sometimes|required|max:255',
+            'mac_address' => 'sometimes|required|unique:devices,mac_address,' . $item->id
         ]);
 
         $item->fill($request->all());

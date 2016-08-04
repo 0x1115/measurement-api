@@ -18,7 +18,7 @@ class Device extends Model implements AuthenticatableContract, AuthorizableContr
      * @var array
      */
     protected $fillable = [
-        'name', 'description'
+        'name', 'description', 'mac_address'
     ];
 
     public function measurements()

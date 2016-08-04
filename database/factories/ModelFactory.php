@@ -32,6 +32,7 @@ $factory->define(App\Device::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->word,
         'description' => $faker->paragraph,
+        'mac_address' => $faker->macAddress
     ];
 });
 

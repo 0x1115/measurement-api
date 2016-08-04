@@ -16,6 +16,7 @@ class DeviceTransformer extends Fractal\TransformerAbstract
             'id'      => (int) $item->id,
             'name'   => $item->name,
             'description' => $item->description,
+            'mac_address' => $item->mac_address
         ];
     }
 
