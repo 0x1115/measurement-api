@@ -15,7 +15,7 @@ class MeasurementTransformer extends Fractal\TransformerAbstract
         return [
             'id'      => (int) $item->id,
             'humidity'   => (double) $item->humidity,
-            'temperature' => (int) $item->temperature,
+            'temperature' => (double) $item->temperature,
         ];
     }
 

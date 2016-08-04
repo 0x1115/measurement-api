@@ -47,7 +47,7 @@ $factory->define(App\Token::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Measurement::class, function (Faker\Generator $faker) {
     return [
-        'humidity' => $faker->randomFloat,
-        'temperature' => $faker->numberBetween(-100, 100)
+        'humidity' => $faker->randomFloat(null, 0, 1),
+        'temperature' => $faker->randomFloat(null, -200, 200)
     ];
 });

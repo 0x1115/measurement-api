@@ -77,10 +77,10 @@ class MeasurementController extends Controller
         }
 
         $this->validate($request, [
-            'name' => 'required|max:255',
-            'humidity' => 'required|numeric',
-            'temperature' => 'required|numeric',
-            'device_id' => 'required|exists:devices,id'
+            'name' => 'sometimes|required|max:255',
+            'humidity' => 'sometimes|required|numeric',
+            'temperature' => 'sometimes|required|numeric',
+            'device_id' => 'sometimes|required|exists:devices,id'
         ]);
 
         if (\Gate::denies('update-device-measurements', $item->device)) {

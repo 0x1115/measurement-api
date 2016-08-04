@@ -17,7 +17,7 @@ class Measurement extends Model
 
     protected $casts = [
         'humidity' => 'double',
-        'temperature' => 'integer'
+        'temperature' => 'double'
     ];
 
     public function device()
