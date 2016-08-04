@@ -24,14 +24,36 @@ class WebController extends Controller
             if (!$e->validator) {
                 return $e->getMessage();
             }
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'error' => [
+                        'message' => 'ValidationError'
+                        'messages' => $e->validator->getMessageBag()->all()
+                    ]
+                ], 422);
+            }
             return $this->setup($e->validator->getMessageBag()->all(), $request->all());
         }
 
         $user = \App\User::where($request->only('email'))->first();
         if (!$user) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'error' => [
+                        'message' => 'User does not exist'
+                    ]
+                ], 422);
+            }
             return $this->setup(['User does not exist'], $request->all());
         }
         if (!Hash::check($request->get('password'), $user->password)) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'error' => [
+                        'message' => 'Password is incorrect'
+                    ]
+                ], 422);
+            }
             return $this->setup(['Password is incorrect'], $request->all());
         }
 
