@@ -2,7 +2,8 @@
 
 ## Installation
 ```bash
-git clone git@github.com:hiendv/measurement-api.git && cd measurement-api
+git clone https://github.com/0x1115/measurement-api.git && cd measurement-api
+# If you use Measurement API in production, consider passing --no-dev option
 composer install -vvv
 ```
 
@@ -13,10 +14,16 @@ vim .env
 ```
 
 ## Migration & Seeding
+#### Production
+```bash
+php artisan migrate:refresh && php artisan db:seed --class=ProductionSeeder
+```
+The seeding process should end up with the default user.
+
+#### Development
 ```bash
 php artisan migrate:refresh --seed
 ```
-If your `APP_ENV` is `production`, the process should end up with the default user.
 
 ## Serving
 Make sure to configure the database before serving. The application is shipped with a default `Caddyfile`
