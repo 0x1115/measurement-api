@@ -49,7 +49,6 @@ class MeasurementController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:255',
             'humidity' => 'required|numeric',
             'temperature' => 'required|numeric',
             'device_id' => 'required|exists:devices,id'
@@ -76,7 +75,6 @@ class MeasurementController extends Controller
         }
 
         $this->validate($request, [
-            'name' => 'sometimes|required|max:255',
             'humidity' => 'sometimes|required|numeric',
             'temperature' => 'sometimes|required|numeric',
             'device_id' => 'sometimes|required|exists:devices,id'
