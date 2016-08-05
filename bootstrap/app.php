@@ -100,7 +100,7 @@ $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
 });
 
 config([
-    'app.version' => '0.1.0',
+    'app.version' => '0.2.0',
     'app.api.queries' => [
         'limit' => [
             'max' => 500,
