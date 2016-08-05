@@ -19,9 +19,10 @@ class DeviceController extends Controller
         $this->repository = $repository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->repository->responsePagination(Device::paginate());
+        $this->repository->setRequest($request);
+        return $this->repository->responseFilteredPagination((new Device)->newQuery());
     }
 
     public function show($id)

@@ -16,7 +16,7 @@ $app->get('/', function () use ($app) {
     return "Measurement API v{$version}";
 });
 
-$app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers', 'middleware' => 'auth'], function ($app) {
+$app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers', 'middleware' => ['auth', 'queries']], function ($app) {
     $app->get('device/', 'DeviceController@index');
     $app->post('device/', 'DeviceController@store');
     $app->get('device/{id}', ['as' => 'device.show', 'uses' => 'DeviceController@show']);

@@ -20,9 +20,10 @@ class MeasurementController extends Controller
         $this->repository = $repository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->repository->responsePagination(Measurement::paginate());
+        $this->repository->setRequest($request);
+        return $this->repository->responseFilteredPagination((new Measurement)->newQuery());
     }
 
     public function show($id)

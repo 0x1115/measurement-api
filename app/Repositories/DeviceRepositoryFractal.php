@@ -8,6 +8,12 @@ class DeviceRepositoryFractal implements DeviceRepository, Traits\FractalableCon
 {
     use Traits\Fractalable;
 
+    protected $request;
+
+    public function setRequest(\Illuminate\Http\Request $request) {
+        $this->request = $request;
+    }
+
     public function getTransformer()
     {
         return new DeviceTransformer;

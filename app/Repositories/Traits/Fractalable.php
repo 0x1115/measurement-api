@@ -26,4 +26,35 @@ trait Fractalable
     {
         return $this->pagination($paginator)->toArray();
     }
+
+    protected function formatQuery($query)
+    {
+        $limit = null;
+        $created_at = null;
+
+        if ($this->request->has('limit')) {
+            $limit = (int) $this->request->input('limit');
+        }
+        if ($this->request->has('created_at')) {
+            $created_at = $this->request->input('created_at');
+            if (!$created_at instanceof \Carbon\Carbon) {
+                $created_at = null;
+            }
+        }
+
+        if ($created_at) {
+            $query = $query->where('created_at', '>=', $created_at);
+        }
+        return $query->paginate($limit ?: null);
+    }
+
+    public function responseFilteredPagination($query)
+    {
+        return $this->filteredPagination($query)->toArray();
+    }
+
+    public function filteredPagination($query)
+    {
+        return $this->pagination($this->formatQuery($query));
+    }
 }

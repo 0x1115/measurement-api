@@ -65,6 +65,7 @@ $app->singleton(
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    'queries' => App\Http\Middleware\ParseQueries::class
 ]);
 
 /*
@@ -98,6 +99,20 @@ $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
     require __DIR__.'/../app/Http/routes.php';
 });
 
-config(['app.version' => '0.1.0']);
+config([
+    'app.version' => '0.1.0',
+    'app.api.queries' => [
+        'limit' => [
+            'max' => 500,
+            'min' => 0,
+            'default' => 250
+        ],
+        'created_at' => [
+            'max' => null,
+            'min' => null,
+            'default' => 'today'
+        ]
+    ]
+]);
 
 return $app;
