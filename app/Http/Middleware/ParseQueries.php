@@ -18,20 +18,20 @@ class ParseQueries
                     'created_at' => $timestamp,
                     '_created_at' => $created_at
                 ]);
+                return $request;
             } catch (\Exception $e) {
-                $created_at = null;
+                // $created_at = null;
             }
         }
 
         /**
          * Created at default value
          */
-        if (!$created_at) {
-            $request->merge([
-                'created_at' => new \Carbon\Carbon($config['default']),
-                '_created_at' => $created_at
-            ]);
-        }
+        $request->merge([
+            'created_at' => new \Carbon\Carbon($config['default']),
+            '_created_at' => null
+        ]);
+        return $request;
     }
 
     protected function parseLimit($request)
@@ -53,20 +53,18 @@ class ParseQueries
                     'limit' => $limitParsed,
                     '_limit' => $limit
                 ]);
-            } else {
-                $limit = null;
+                return $request;
             }
         }
 
         /**
          * Limit default value
          */
-        if (!$limit) {
-            $request->merge([
-                'limit' => $config['default'],
-                '_limit' => $limit
-            ]);
-        }
+        $request->merge([
+            'limit' => $config['default'],
+            '_limit' => null
+        ]);
+        return $request;
     }
 
     /**
