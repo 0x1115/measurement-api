@@ -6,14 +6,7 @@ use Closure;
 
 class ParseQueries
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
+    protected function parseCreatedAt($request)
     {
         $config = config('app.api.queries.created_at', ['default' => 'today']);
         $created_at = null;
@@ -39,7 +32,10 @@ class ParseQueries
                 '_created_at' => $created_at
             ]);
         }
+    }
 
+    protected function parseLimit($request)
+    {
         $config = config('app.api.queries.limit', ['default' => 250, 'min' => 0, 'max' => 500]);
         $limit = null;
         if ($request->has('limit')) {
@@ -71,8 +67,20 @@ class ParseQueries
                 '_limit' => $limit
             ]);
         }
+    }
 
-        dd($request->all());
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        $this->parseCreatedAt($request);
+
+        $this->parseLimit($request);
 
         return $next($request);
     }
