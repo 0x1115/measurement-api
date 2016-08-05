@@ -24,7 +24,7 @@ class WebController extends Controller
             if (!$e->validator) {
                 return $e->getMessage();
             }
-            if ($request->ajax() || $request->wantsJson()) {
+            if ($request->ajax() || $request->wantsJson() || $request->isJson()) {
                 return response()->json([
                     'error' => [
                         'message' => 'ValidationError',
@@ -37,7 +37,7 @@ class WebController extends Controller
 
         $user = \App\User::where($request->only('email'))->first();
         if (!$user) {
-            if ($request->ajax() || $request->wantsJson()) {
+            if ($request->ajax() || $request->wantsJson() || $request->isJson()) {
                 return response()->json([
                     'error' => [
                         'message' => 'User does not exist'
@@ -47,7 +47,7 @@ class WebController extends Controller
             return $this->setup(['User does not exist'], $request->all());
         }
         if (!Hash::check($request->get('password'), $user->password)) {
-            if ($request->ajax() || $request->wantsJson()) {
+            if ($request->ajax() || $request->wantsJson() || $request->isJson()) {
                 return response()->json([
                     'error' => [
                         'message' => 'Password is incorrect'
@@ -58,7 +58,7 @@ class WebController extends Controller
         }
 
         $token = \App\User::generateToken($user, null);
-        if ($request->ajax() || $request->wantsJson()) {
+        if ($request->ajax() || $request->wantsJson() || $request->isJson()) {
             return response()->json([
                 'data' => $token->content
             ], 200);
