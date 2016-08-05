@@ -11,10 +11,12 @@ class ExampleTest extends TestCase
      */
     public function testExample()
     {
+        $version = config('app.version');
+
         $this->get('/');
 
         $this->assertEquals(
-            'Measurement API', $this->response->getContent()
+            "Measurement API v{$version}", $this->response->getContent()
         );
     }
 }

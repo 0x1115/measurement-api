@@ -98,4 +98,6 @@ $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
     require __DIR__.'/../app/Http/routes.php';
 });
 
+config(['app.version' => '0.1.0']);
+
 return $app;

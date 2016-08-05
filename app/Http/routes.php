@@ -12,7 +12,8 @@
 */
 
 $app->get('/', function () use ($app) {
-    return 'Measurement API';
+    $version = config('app.version');
+    return "Measurement API v{$version}";
 });
 
 $app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers', 'middleware' => 'auth'], function ($app) {
