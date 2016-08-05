@@ -1,5 +1,4 @@
 FORMAT: 1A
-HOST: http://measurement.dev:2015/v1/
 
 # MEASUREMENT
 
@@ -12,32 +11,33 @@ An API for logging humidity & temperature measurements
 + Request (application/json)
     + Headers
 
-            Authorization: Bearer 8gg5RbGwyH582dnSNGV8TKMY2kk24V1PyhNEWpKJbaZYzdY0PfYD5W0SSAE3
+            Authorization: Bearer rEWnnWOlGlFc0O6YEixmXsmyIkxblaKUTUnLCj1HAeHpBqVfzEdPUEmkKZMf
 
 + Response 200 (application/json)
     + Attributes
-        {
-            "data": (array[Device]),
-            "meta": {
-                "pagination": {
-                    "total": 49,
-                    "count": 15,
-                    "per_page": 15,
-                    "current_page": 1,
-                    "total_pages": 4,
-                    "links": {
-                        "next": "http://measurement.dev:2015/v1/device?page=2"
+
+            {
+                "data": (array[Device]),
+                "meta": {
+                    "pagination": {
+                        "total": 49,
+                        "count": 15,
+                        "per_page": 15,
+                        "current_page": 1,
+                        "total_pages": 4,
+                        "links": {
+                            "next": "http://measurement.dev:2015/v1/device?page=2"
+                        }
                     }
                 }
             }
-        }
 
 ### Create a Device [POST]
 
 + Request (application/json)
     + Headers
 
-            Authorization: Bearer 8gg5RbGwyH582dnSNGV8TKMY2kk24V1PyhNEWpKJbaZYzdY0PfYD5W0SSAE3
+            Authorization: Bearer rEWnnWOlGlFc0O6YEixmXsmyIkxblaKUTUnLCj1HAeHpBqVfzEdPUEmkKZMf
     + Attributes (Device Create)
 
 + Response 201 (application/json)
@@ -45,35 +45,38 @@ An API for logging humidity & temperature measurements
 
             Location: /device/1
     + Attributes
+
             - data (Device Full)
 
 ### Update a Device [PUT /device/{id}]
 
 + Parameters
-    + id: 1 - Id of a device.
+    + id: 1 (number, required) - ID of a device.
 
 + Request (application/json)
     + Headers
 
-            Authorization: Bearer 8gg5RbGwyH582dnSNGV8TKMY2kk24V1PyhNEWpKJbaZYzdY0PfYD5W0SSAE3
+            Authorization: Bearer rEWnnWOlGlFc0O6YEixmXsmyIkxblaKUTUnLCj1HAeHpBqVfzEdPUEmkKZMf
     + Attributes (Device Update)
 
 + Response 200 (application/json)
     + Attributes
+
         - data (Device Full)
 
 ### Delete a Device [DELETE /device/{id}]
 
 + Parameters
-    + id: 2 - Id of a device.
+    + id: 2 (number, required) - ID of a device.
 
 + Request (application/json)
     + Headers
 
-            Authorization: Bearer 8gg5RbGwyH582dnSNGV8TKMY2kk24V1PyhNEWpKJbaZYzdY0PfYD5W0SSAE3
+            Authorization: Bearer rEWnnWOlGlFc0O6YEixmXsmyIkxblaKUTUnLCj1HAeHpBqVfzEdPUEmkKZMf
 
 + Response 200 (application/json)
     + Attributes
+
             - data (Device Full)
 
 ## Data Structures
